@@ -1,55 +1,66 @@
-import express from 'express';
+import express from "express";
+import dotenv from "dotenv";
 
-import dotenv from 'dotenv';
+import { conectarDB } from "./db/db.js";
 
-import { conectarDB, supabase } from "./db/db.js";
-//buscarusuario
+// ================= RUTAS =================
 import userRoutes from "./routes/user.js";
-
-//buscarpedido
 import pedidosRoutes from "./routes/pedido.js";
 
 
+// configurar dotenv
 dotenv.config();
 
+
+// crear app
 const app = express();
 
-// conectar DB
+
+// ================= CONECTAR DB =================
 conectarDB();
 
-// middlewares
+
+// ================= MIDDLEWARES =================
 app.use(express.json());
 
-// ruta base
-app.get('/', (req, res) => {
+
+// ================= RUTA BASE =================
+app.get("/", (req, res) => {
+
     res.send({
         mensaje: "Bienvenido a mi API de Node.js con Express"
     });
 });
 
-// saludo
+
+// ================= SALUDO =================
 app.get("/saludo", (req, res) => {
+
     res.send({
         mensaje: "Hola",
         hora: new Date().toLocaleTimeString()
     });
 });
 
-// sobre mí
+
+// ================= SOBRE MI =================
 app.get("/sobremi", (req, res) => {
+
     res.send({
         mensaje: "Hola, mi nombre es Carlos Ome",
         hora: new Date().toLocaleTimeString()
     });
 });
 
-// ================= USUARIOS =================
 
-//ruta usuario 
-app.use("/usuario", userRoutes)
+// ================= USUARIOS =================
+app.use("/usuario", userRoutes);
+
+
 // ================= PEDIDOS =================
-//ruta pedido
 app.use("/pedidos", pedidosRoutes);
+
+
 
 // ================= FACTURAS =================
 
@@ -76,13 +87,18 @@ app.post("/factura", async (req, res) => {
     res.json({ factura: data[0] });
 });
 
-console.log(await response.text());
+
 
 
 // ================= SERVER =================
-
+// ================= PUERTO =================
 const PORT = 3000;
 
+
+// ================= INICIAR SERVIDOR =================
 app.listen(PORT, () => {
-    console.log(`Servidor corriendo en http://localhost:${PORT}`);
+
+    console.log(
+        `Servidor corriendo en http://localhost:${PORT}`
+    );
 });

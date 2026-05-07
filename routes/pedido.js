@@ -1,16 +1,29 @@
-import { actualizarpedidos, Routes } from "../controllers/pedido.js";
+import express from "express";
+
 import {
-  pedidoModel,
-  crearnuevopedido,
-  actualizarpedido,
-  eliminarpedido
+    pedidos,
+    crearnuevopedido,
+    actualizarpedidos,
+    eliminarpedidos
 } from "../controllers/pedido.js";
 
-const router = Routes();
 
-router.get("/", pedidoModel);
+const router = express.Router();
+
+
+// ================= OBTENER TODOS =================
+router.get("/", pedidos);
+
+
+// ================= CREAR PEDIDO =================
 router.post("/", crearnuevopedido);
+
+
+// ================= ACTUALIZAR PEDIDO =================
 router.put("/:id", actualizarpedidos);
+
+
+// ================= ELIMINAR PEDIDO =================
 router.delete("/:id", eliminarpedidos);
 
 
